@@ -4,6 +4,9 @@ cuora
 </br>
 共筆Hackpad:
 https://hackpad.com/MTSYY0Y6eCY
+</br>
+資料收集:
+https://hackfoldr.org/turtle-cuora
 
 ## Pre-Require
 
