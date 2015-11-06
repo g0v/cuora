@@ -1,44 +1,42 @@
 import gulp         from 'gulp';
-import gutil        from 'gulp-util';
-import livereload   from 'gulp-livereload';
+import webserver    from 'gulp-webserver';
+import ip           from 'ip';
 
-import express     from 'express';
-import liveConnect from 'connect-livereload';
-import path        from 'path';
+let config = {};
 
-let app = express();
+config.buildPath = '.';
+config.port = 3000;
+config.localhost = ip.address() || 'localhost';
 
 gulp.task('html', () => {
   return gulp.src('./*.html')
-    .pipe(livereload());
 });
 
 gulp.task('css', () => {
   return gulp.src('./css/*.css')
-    .pipe(livereload());
 });
 
 gulp.task('js', () => {
   return gulp.src('./js/*.js')
-    .pipe(livereload());
 });
 
-gulp.task('server', (done) => {
-  app.use(liveConnect());
-  app.use(express.static(path.resolve('.')));
-  app.listen(3000, () => {
-    gutil.log('Listening on port 3000');
-    done();
-  });
+gulp.task('webserver', () => {
+  gulp.src('./')
+    .pipe(webserver({
+      host: config.localhost,
+      port: config.port,
+      livereload: true,
+      open: true
+    })
+  );
 });
 
 gulp.task('watch', (done) => {
-  livereload.listen({start: true});
   gulp.watch('./css/*.css', ['css']);
   gulp.watch('./js/*.js', ['js']);
   gulp.watch('*.html', ['html']);
   done();
 });
 
-gulp.task('dev', ['server', 'watch']);
+gulp.task('dev', ['webserver', 'watch']);
 gulp.task('default', ['dev']);

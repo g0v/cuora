@@ -18,7 +18,6 @@ Install [NodeJS](https://nodejs.org/en/)
 
 `npm start`
 
-and then open `http://localhost:3000/`
 
 ## Change Log
 
